@@ -18,26 +18,33 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/" className="nav-link">דף הבית</Link>
           <Link to="/weather" className="nav-link">מזג אוויר</Link>
+          <Link to="/tips" className="nav-link">טיפים והמלצות</Link>
+          
           {user ? (
             <>
               <Link to="/community" className="nav-link">קהילה</Link>
-              <div className="user-profile">
-                {user.isAdmin && <span className="admin-badge">מנהל</span>}
-                <span className="user-avatar">
-                  {user.name ? user.name.charAt(0).toUpperCase() : '?'}
-                </span>
-                <span className="user-name">{user.name || 'משתמש'}</span>
+              <div className="user-menu">
+                <div className="user-profile">
+                  {user.isAdmin && <span className="admin-badge">מנהל</span>}
+                  <Link to="/profile" className="profile-link">
+                    <span className="user-avatar">
+                      {user.name ? user.name.charAt(0).toUpperCase() : '?'}
+                    </span>
+                    <span className="user-name">{user.name || 'משתמש'}</span>
+                  </Link>
+                </div>
+                <button 
+                  onClick={() => dispatch(logout())} 
+                  className="nav-link logout-btn"
+                >
+                  התנתק
+                </button>
               </div>
-              <button 
-                onClick={() => dispatch(logout())} 
-                className="nav-link logout-btn"
-              >
-                התנתק
-              </button>
             </>
           ) : (
             <>
               <Link to="/login" className="nav-link">התחברות</Link>
+              {/* אנו מציגים רק לינק אחד להרשמה בנאבבר */}
               <Link to="/register" className="nav-link btn-register">הרשמה</Link>
             </>
           )}

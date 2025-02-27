@@ -1,0 +1,233 @@
+.tips-page {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tips-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tips-header h1 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.tips-header p {
+  color: var(--text-light);
+}
+
+.categories-filter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-btn {
+  padding: 8px 16px;
+  background-color: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.category-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tip-category {
+  background-color: #f0f8ff;
+  color: #1976d2;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+.tip-card[data-category="nutrition"] .tip-category {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tip-card[data-category="training"] .tip-category {
+  background-color: #ede7f6;
+  color: #5e35b1;
+}
+
+.tip-card[data-category="recovery"] .tip-category {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.tip-card[data-category="motivation"] .tip-category {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.tip-title {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--text-dark);
+}
+
+.tip-content {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.tip-footer {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-light);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+.create-tip-section {
+  margin-bottom: 2rem;
+}
+
+.btn-create-tip {
+  width: 100%;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.btn-create-tip:hover {
+  background-color: #e8f5e9;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.tip-form-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.tip-form h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.tip-form .form-group {
+  margin-bottom: 15px;
+}
+
+.tip-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.tip-form input,
+.tip-form select,
+.tip-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  transition: border-color 0.2s;
+}
+
+.tip-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tip-form input:focus,
+.tip-form select:focus,
+.tip-form textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-submit:hover {
+  background-color: #3d8b40;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.no-tips {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #666;
+}
