@@ -5,8 +5,10 @@ import '../styles/community.css';
 
 function CommunityPage() {
   const { error } = useSelector(state => state.community);
-
-  return (
+function f(){
+  console.log("hi");
+} 
+ return (
     <div className="community-page">
       <div className="community-header">
         <h1>הקהילה שלנו</h1>
