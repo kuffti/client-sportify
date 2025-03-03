@@ -9,6 +9,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const { user, isLoading } = useSelector(state => state.auth);
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState('');
   const [profileData, setProfileData] = useState({
     name: '',
     email: ''
@@ -34,19 +35,29 @@ function ProfilePage() {
       ...prev,
       [name]: value
     }));
+    // נקה שגיאות בעת הקלדה
+    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
     try {
+      if (!profileData.name.trim()) {
+        setError('שם הוא שדה חובה');
+        return;
+      }
+      
       await dispatch(updateProfile(profileData)).unwrap();
       setIsEditing(false);
     } catch (err) {
       console.error('שגיאה בעדכון פרופיל:', err);
+      setError(typeof err === 'string' ? err : 'אירעה שגיאה בעדכון הפרופיל');
     }
   };
 
-  if (!user) return null; // מניעת רינדור אם אין משתמש
+  if (!user) return null;
 
   return (
     <div className="profile-container">
@@ -63,6 +74,8 @@ function ProfilePage() {
             {user.isAdmin && <span className="admin-badge">מנהל מערכת</span>}
           </div>
         </div>
+        
+        {error && <div className="error-message" role="alert">{error}</div>}
 
         {isEditing ? (
           <form onSubmit={handleSubmit} className="profile-form">
@@ -73,6 +86,7 @@ function ProfilePage() {
                 name="name"
                 value={profileData.name}
                 onChange={handleChange}
+                required
               />
             </div>
             
@@ -98,7 +112,15 @@ function ProfilePage() {
               <button 
                 type="button" 
                 className="btn-cancel"
-                onClick={() => setIsEditing(false)}
+                onClick={() => {
+                  setIsEditing(false);
+                  setError('');
+                  // החזר את הערכים המקוריים
+                  setProfileData({
+                    name: user.name || '',
+                    email: user.email || ''
+                  });
+                }}
                 disabled={isLoading}
               >
                 ביטול
