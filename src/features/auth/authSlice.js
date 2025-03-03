@@ -45,27 +45,82 @@ export const login = createAsyncThunk(
       const response = await api.post('/api/users/login', userData);
       
       if (response.data) {
+        // שמירת המשתמש ב-localStorage
         localStorage.setItem('user', JSON.stringify(response.data));
         
-        // הודעה מותאמת אם המשתמש הוא אדמין
-        const message = response.data.isAdmin 
-          ? 'התחברת בהצלחה עם הרשאות מנהל!' 
-          : 'התחברת בהצלחה!';
-          
         dispatch(showToast({
-          message,
+          message: `ברוך הבא, ${response.data.name}!`,
           type: 'success'
         }));
         
         return response.data;
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'שגיאה בהתחברות';
+      // טיפול מפורט בשגיאות
+      let errorMessage;
+      
+      if (error.response) {
+        // השרת הגיב עם סטטוס שגיאה
+        errorMessage = error.response.data?.message || 
+                      'שגיאה בהתחברות, אנא בדוק את הפרטים שהזנת';
+        
+        // לוגים ספציפיים לדיבוג
+        console.error('שגיאת תשובה:', {
+          status: error.response.status,
+          data: error.response.data,
+          message: errorMessage
+        });
+      } else if (error.request) {
+        // הבקשה נשלחה אך לא התקבלה תשובה
+        errorMessage = 'בעיית תקשורת עם השרת, אנא נסה שוב מאוחר יותר';
+        console.error('שגיאת בקשה (ללא תשובה):', error.request);
+      } else {
+        // שגיאה בהגדרת הבקשה
+        errorMessage = 'שגיאה בהתחברות, אנא נסה שוב';
+        console.error('שגיאת הגדרה:', error.message);
+      }
+      
       dispatch(showToast({
         message: errorMessage,
         type: 'error'
       }));
+      
       return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+// פעולה אסינכרונית לעדכון פרופיל
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (profileData, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const { user } = getState().auth;
+      if (!user) {
+        throw new Error('המשתמש לא מחובר');
+      }
+      
+      const response = await api.put('/api/users/profile', profileData);
+      
+      if (response.data) {
+        // עדכון נתוני המשתמש ב-localStorage
+        const updatedUser = { ...user, ...response.data };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        
+        dispatch(showToast({
+          message: 'הפרופיל עודכן בהצלחה!',
+          type: 'success'
+        }));
+        
+        return response.data;
+      }
+    } catch (error) {
+      dispatch(showToast({
+        message: error.response?.data?.message || 'שגיאה בעדכון הפרופיל',
+        type: 'error'
+      }));
+      
+      return rejectWithValue(error.response?.data?.message || 'שגיאה בעדכון הפרופיל');
     }
   }
 );
@@ -78,6 +133,9 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       state.user = null;
       state.error = null;
+    },
+    clearAuthError: (state) => {
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
@@ -89,6 +147,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -106,9 +165,22 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      // הוספת מקרים לעדכון פרופיל
+      .addCase(updateProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // עדכון נתוני המשתמש במצב
+        state.user = { ...state.user, ...action.payload };
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   }
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, clearAuthError } = authSlice.actions;
 export default authSlice.reducer;

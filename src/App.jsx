@@ -10,6 +10,8 @@ import NotFoundPage from './pages/NotFoundPage'; // נייבא את דף ה-404
 import Toast from './components/layout/Toast';
 import Loader from './components/layout/Loader';
 import WeatherPage from './pages/WeatherPage';
+import TipsPage from './pages/TipsPage'; // חשוב! ייבוא דף הטיפים
+import ProfilePage from './pages/ProfilePage';
 import './styles/weather.css';
 
 // קונפיגורציה להסרת האזהרות
@@ -39,7 +41,13 @@ function App() {
                 <CommunityPage />
               </ProtectedRoute>
             } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            } />
             <Route path="/weather" element={<WeatherPage />} />
+            <Route path="/tips" element={<TipsPage />} /> {/* חשוב! נתיב לדף הטיפים */}
             <Route path="*" element={<NotFoundPage />} /> {/* כל נתיב אחר יוביל לדף 404 */}
           </Routes>
         </main>

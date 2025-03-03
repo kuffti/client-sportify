@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+// יצירת מופע של אקסיוס עם קונפיגורציה בסיסית
 const api = axios.create({
-  baseURL: 'http://localhost:5000', // וידוא שזה מתאים לפורט של השרת
+  baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
+// מידלוור לבקשות יוצאות - מוסיף טוקן אוטומטית
 api.interceptors.request.use(
   (config) => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -16,29 +18,30 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error('Request Error:', error);
+    console.error('שגיאה בהגדרת הבקשה:', error);
     return Promise.reject(error);
   }
 );
 
-// הוספת לוגים לזיהוי שגיאות
+// מידלוור לתשובות - טיפול בשגיאות
 api.interceptors.response.use(
   (response) => {
-    console.log(`API Success: ${response.config.method.toUpperCase()} ${response.config.url}`);
     return response;
   },
   (error) => {
-    console.error('API Error:', {
-      url: error.config?.url,
-      method: error.config?.method,
-      status: error.response?.status,
-      data: error.response?.data
-    });
-    
-    if (error.response?.status === 401) {
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+    // לוגים מפורטים לדיבוג
+    if (error.response) {
+      console.error(`שגיאת API: ${error.config.method.toUpperCase()} ${error.config.url}`, {
+        status: error.response.status,
+        data: error.response.data
+      });
+    } else if (error.request) {
+      console.error('שגיאה - לא התקבלה תשובה מהשרת:', error.request);
+    } else {
+      console.error('שגיאה בהגדרת הבקשה:', error.message);
     }
+    
+    // חשוב: החזרת דחייה כדי שהטיפול בשגיאה ימשיך במקרא
     return Promise.reject(error);
   }
 );
