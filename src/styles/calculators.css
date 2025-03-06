@@ -1,0 +1,458 @@
+/* עיצוב כללי לדף המחשבונים */
+.calculators-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/* עיצוב לניווט בין המחשבונים */
+.calculators-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.calculators-nav {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.calculator-nav-item {
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.calculator-nav-item:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.calculator-nav-item.active {
+  background-color: #fff;
+  color: #3498db;
+  border-bottom: 3px solid #3498db;
+}
+
+.calculator-content {
+  padding: 2rem;
+}
+
+/* עיצוב כללי לכרטיסי המחשבונים */
+.calculator-card {
+  width: 100%;
+}
+
+.calculator-title {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* עיצוב טפסים */
+form {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+/* עיצוב לקבוצות רדיו */
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  width: auto;
+  margin-left: 0.5rem;
+}
+
+/* עיצוב כפתורים */
+.calculator-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.calculate-btn,
+.reset-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.calculate-btn {
+  background-color: #3498db;
+  color: white;
+  flex: 2;
+}
+
+.calculate-btn:hover {
+  background-color: #2980b9;
+}
+
+.reset-btn {
+  background-color: #e9ecef;
+  color: #495057;
+  flex: 1;
+}
+
+.reset-btn:hover {
+  background-color: #dee2e6;
+}
+
+/* עיצוב לתוצאות */
+.result-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-right: 4px solid #3498db;
+}
+
+.result-container h4 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.result-container h5 {
+  color: #2c3e50;
+  margin: 1.25rem 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* עיצוב ספציפי למחשבון BMI */
+.bmi-result,
+.calories-result,
+.heart-rate-result,
+.pace-result {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.bmi-value,
+.calories-value,
+.max-hr,
+.result-value {
+  font-weight: 700;
+  color: #3498db;
+}
+
+.bmi-status {
+  margin-bottom: 1.25rem;
+}
+
+.status-value {
+  font-weight: 600;
+}
+
+.status-value.תת-משקל {
+  color: #e74c3c;
+}
+
+.status-value.משקל.תקין {
+  color: #2ecc71;
+}
+
+.status-value.עודף.משקל {
+  color: #f39c12;
+}
+
+.status-value.השמנה {
+  color: #c0392b;
+}
+
+.bmi-scale {
+  display: flex;
+  margin: 1rem 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.scale-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.scale-item.underweight {
+  background-color: #e74c3c;
+}
+
+.scale-item.normal {
+  background-color: #2ecc71;
+}
+
+.scale-item.overweight {
+  background-color: #f39c12;
+}
+
+.scale-item.obese {
+  background-color: #c0392b;
+}
+
+.bmi-info,
+.hr-info,
+.calorie-info {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* עיצוב ספציפי למחשבון קצב לב */
+.heart-rate-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.zone-item {
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-right: 3px solid;
+}
+
+.zone-item h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.zone-range {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.zone-percent {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+}
+
+.zone-desc {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.zone-1 {
+  border-color: #3498db;
+}
+
+.zone-2 {
+  border-color: #2ecc71;
+}
+
+.zone-3 {
+  border-color: #f39c12;
+}
+
+.zone-4 {
+  border-color: #e67e22;
+}
+
+.zone-5 {
+  border-color: #e74c3c;
+}
+
+/* עיצוב ספציפי למחשבון קלוריות */
+.macros-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.macro-item {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
+}
+
+.macro-item h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.macro-item p {
+  margin: 0.25rem 0;
+}
+
+.macro-item.protein {
+  background-color: #3498db;
+}
+
+.macro-item.fat {
+  background-color: #f39c12;
+}
+
+.macro-item.carbs {
+  background-color: #2ecc71;
+}
+
+/* עיצוב ספציפי למחשבון קצב ריצה */
+.time-inputs,
+.pace-inputs {
+  margin-bottom: 1.5rem;
+}
+
+.time-fields,
+.pace-fields {
+  display: flex;
+  gap: 1rem;
+}
+
+.time-field,
+.pace-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-field input,
+.pace-field input {
+  text-align: center;
+}
+
+.time-field span,
+.pace-field span {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+.pace-equivalents {
+  margin-top: 1.5rem;
+}
+
+.pace-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+}
+
+.pace-table th,
+.pace-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+  text-align: right;
+}
+
+.pace-table th {
+  font-weight: 600;
+  color: #2c3e50;
+  background-color: #f1f3f5;
+}
+
+.pace-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* תגובתיות */
+@media (max-width: 768px) {
+  .calculators-nav {
+    flex-wrap: wrap;
+  }
+  
+  .calculator-nav-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .calculator-content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .macros-container,
+  .time-fields,
+  .pace-fields {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

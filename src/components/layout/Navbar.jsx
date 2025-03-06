@@ -19,6 +19,7 @@ function Navbar() {
           <Link to="/" className="nav-link">דף הבית</Link>
           <Link to="/weather" className="nav-link">מזג אוויר</Link>
           <Link to="/tips" className="nav-link">טיפים והמלצות</Link>
+          <Link to="/calculators" className="nav-link">מחשבונים</Link>
           
           {user ? (
             <>
