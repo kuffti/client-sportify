@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 function WeatherDetails() {
   const { currentWeather } = useSelector(state => state.weather);
 
-  if (!currentWeather) return null;
+  // בדיקה שיש לנו נתונים תקינים לפני הגישה אליהם
+  if (!currentWeather || !currentWeather.temperature) {
+    return <div className="weather-loading">ממתין לנתוני מזג אוויר...</div>;
+  }
 
   const getWeatherCondition = (temp, windSpeed) => {
     if (temp > 30) return 'חם מאוד';
@@ -13,30 +16,32 @@ function WeatherDetails() {
     return 'קר';
   };
 
-  const weather = currentWeather.current_weather;
-  const condition = getWeatherCondition(weather.temperature, weather.windspeed);
+  // בדיקה נוספת לפני השימוש בנתונים
+  const temp = currentWeather.temperature;
+  const windSpeed = currentWeather.windspeed || 0;
+  const condition = getWeatherCondition(temp, windSpeed);
 
   return (
     <div className="weather-details">
       <div className="weather-detail-item">
         <span className="label">טמפרטורה:</span>
-        <span className="value">{weather.temperature}°C</span>
+        <span className="value">{temp}°C</span>
         <span className="condition">({condition})</span>
       </div>
       
       <div className="weather-detail-item">
         <span className="label">רוח:</span>
-        <span className="value">{weather.windspeed} קמ"ש</span>
+        <span className="value">{windSpeed} קמ"ש</span>
         <span className="condition">
-          {weather.windspeed > 20 ? '💨 רוח חזקה' : '🌡️ רוח מתונה'}
+          {windSpeed > 20 ? '💨 רוח חזקה' : '🌡️ רוח מתונה'}
         </span>
       </div>
 
       <div className="weather-alert">
-        {weather.temperature > 30 && (
+        {temp > 30 && (
           <p className="alert hot">⚠️ מומלץ להצטייד בהרבה מים ולהימנע מפעילות בשעות החמות</p>
         )}
-        {weather.windspeed > 25 && (
+        {windSpeed > 25 && (
           <p className="alert windy">⚠️ תנאי רוח חזקים - יש לנקוט משנה זהירות</p>
         )}
       </div>

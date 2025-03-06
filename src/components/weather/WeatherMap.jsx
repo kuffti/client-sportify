@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLocation, fetchWeather } from '../../features/weather/weatherSlice';
-import L from 'leaflet';
+import { setLocation } from '../../features/weather/weatherSlice';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 // תיקון לאייקונים של Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -14,59 +14,62 @@ L.Icon.Default.mergeOptions({
 });
 
 // קומפוננטה לטיפול באירועי מפה
-function MapEvents() {
-  const dispatch = useDispatch();
-  
+function MapEvents({ onLocationSelect }) {
   const map = useMapEvents({
     click(e) {
       const { lat, lng } = e.latlng;
-      dispatch(setLocation({ latitude: lat, longitude: lng }));
-      dispatch(fetchWeather({ latitude: lat, longitude: lng }));
-    },
+      onLocationSelect({ latitude: lat, longitude: lng });
+    }
   });
   
   return null;
 }
 
-function WeatherMap() {
+// קומפוננטה להצגת הנקודה הנבחרת
+function LocationMarker({ position }) {
+  return position ? <Marker position={[position.latitude, position.longitude]} /> : null;
+}
+
+function WeatherMap({ onLocationSelect }) {
   const dispatch = useDispatch();
   const { location } = useSelector(state => state.weather);
-  const defaultPosition = [31.7683, 35.2137]; // ירושלים
+  const defaultPosition = [31.7683, 35.2137]; // ירושלים כברירת מחדל
+  
+  // אם לא התקבלה פונקציית בחירת מיקום, נשתמש בברירת המחדל
+  const handleLocationSelect = onLocationSelect || ((newLocation) => {
+    dispatch(setLocation(newLocation));
+  });
 
+  // ניסיון לקבל מיקום נוכחי בטעינה הראשונית
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (!location && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          dispatch(setLocation({ latitude, longitude }));
-          dispatch(fetchWeather({ latitude, longitude }));
+          handleLocationSelect({ latitude, longitude });
         },
         (error) => {
-          console.error("Error getting location:", error);
+          console.warn("Error getting location:", error.message);
         }
       );
     }
-  }, [dispatch]);
+  }, []);
 
   return (
-    <MapContainer
-      center={location ? [location.latitude, location.longitude] : defaultPosition}
-      zoom={13}
-      style={{ height: '100%', width: '100%' }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      />
-      <MapEvents />
-      {location && (
-        <Marker position={[location.latitude, location.longitude]}>
-          <Popup>
-            המיקום הנבחר
-          </Popup>
-        </Marker>
-      )}
-    </MapContainer>
+    <div className="weather-map">
+      <MapContainer
+        center={location ? [location.latitude, location.longitude] : defaultPosition}
+        zoom={13}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <MapEvents onLocationSelect={handleLocationSelect} />
+        {location && <LocationMarker position={location} />}
+      </MapContainer>
+    </div>
   );
 }
 

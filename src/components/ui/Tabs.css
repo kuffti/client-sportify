@@ -1,0 +1,114 @@
+.tabs-container {
+  margin: 2rem 0;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.tabs-header {
+  display: flex;
+  background-color: #f9f9fc;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ecedf5;
+  border-radius: 16px 16px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab-button {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #7b7d8f;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex: 1;
+  justify-content: center;
+}
+
+.tab-button:before {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 3px;
+  transition: transform 0.3s ease;
+}
+
+.tab-button:hover {
+  color: var(--primary-color);
+  background-color: rgba(76, 175, 80, 0.05);
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.tab-button.active:before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.tab-icon {
+  font-size: 1.3rem;
+}
+
+.tabs-content {
+  padding: 2rem;
+  min-height: 300px;
+}
+
+.tab-pane {
+  animation: slideUpFade 0.5s ease-out;
+}
+
+@keyframes slideUpFade {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* מדיה קווארי לטלפונים ניידים */
+@media (max-width: 768px) {
+  .tabs-header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .tab-button {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    flex: 0 0 auto;
+  }
+  
+  .tabs-content {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* מדיה קווארי לטאבלטים */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tabs-content {
+    padding: 1.5rem;
+  }
+}

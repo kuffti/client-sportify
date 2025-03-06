@@ -2,11 +2,18 @@
 <html lang="he" dir="rtl" data-theme="light">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- חשוב: קודם יש לטעון את הספרייה הבסיסית Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin="" />
-    <title>Sportify - הקהילה הספורטיבית שלך</title>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+    <!-- רק אחרי שיש לנו Leaflet מלא, נטען את הרחבת Heat -->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <title>Sportify - פלטפורמת ספורט חברתית</title>
   </head>
   <body>
     <div id="root"></div>
