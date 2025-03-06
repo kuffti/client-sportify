@@ -20,6 +20,7 @@ function Navbar() {
           <Link to="/weather" className="nav-link">מזג אוויר</Link>
           <Link to="/tips" className="nav-link">טיפים והמלצות</Link>
           <Link to="/calculators" className="nav-link">מחשבונים</Link>
+          <Link to="/groups" className="nav-link">קבוצות ספורט</Link> {/* הוספת קישור לעמוד הקבוצות */}
           
           {user ? (
             <>

@@ -13,6 +13,7 @@ import WeatherPage from './pages/WeatherPage';
 import TipsPage from './pages/TipsPage'; // חשוב! ייבוא דף הטיפים
 import ProfilePage from './pages/ProfilePage';
 import CalculatorsPage from './pages/CalculatorsPage'; // ייבוא דף המחשבונים
+import GroupsPage from './pages/GroupsPage'; // ייבוא דף הקבוצות
 import './styles/weather.css';
 
 // קונפיגורציה להסרת האזהרות
@@ -50,6 +51,7 @@ function App() {
             <Route path="/weather" element={<WeatherPage />} />
             <Route path="/tips" element={<TipsPage />} /> {/* חשוב! נתיב לדף הטיפים */}
             <Route path="/calculators" element={<CalculatorsPage />} /> {/* נתיב לדף המחשבונים */}
+            <Route path="/groups" element={<GroupsPage />} /> {/* הוספת נתיב לעמוד הקבוצות */}
             <Route path="*" element={<NotFoundPage />} /> {/* כל נתיב אחר יוביל לדף 404 */}
           </Routes>
         </main>

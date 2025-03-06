@@ -1,0 +1,433 @@
+.groups-page {
+  padding: 40px 0;
+}
+
+.groups-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.groups-header h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.groups-header p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
+
+/* עיצוב מסנן סוג ספורט */
+.sport-type-filter {
+  margin-bottom: 30px;
+}
+
+.sport-type-filter h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--text-dark);
+}
+
+.sport-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.sport-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 10px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.sport-type-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-color);
+}
+
+.sport-type-card.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.sport-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.sport-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* כפתור יצירת קבוצה */
+.groups-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.create-group-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  animation: pulse 2s infinite;
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+/* עיצוב רשימת קבוצות */
+.groups-list h2 {
+  margin-bottom: 20px;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* עיצוב כרטיס קבוצה */
+.group-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.group-header h3 {
+  margin: 0;
+  color: var(--text-dark);
+}
+
+.group-type {
+  background: var(--primary-color);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.group-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-icon {
+  font-size: 1.2rem;
+}
+
+.group-details {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.group-description {
+  margin-bottom: 20px;
+}
+
+.group-description h4,
+.group-location h4,
+.group-participants h4 {
+  margin-bottom: 10px;
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
+.location-mini-map {
+  border-radius: 10px;
+  overflow: hidden;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.participants-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.participant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--background-light);
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.participant-avatar {
+  width: 25px;
+  height: 25px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.creator-badge {
+  background: #FFC107;
+  color: #333;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  margin-right: 5px;
+}
+
+.group-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.btn-details,
+.btn-join,
+.btn-leave,
+.btn-full,
+.btn-danger {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  flex: 1;
+  transition: all 0.2s;
+}
+
+.btn-details {
+  background: #f0f0f0;
+  color: var(--text-dark);
+}
+
+.btn-join {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-leave {
+  background: #ff9800;
+  color: white;
+}
+
+.btn-danger {
+  background: #f44336;
+  color: white;
+}
+
+.btn-full {
+  background: #9e9e9e;
+  color: white;
+  cursor: not-allowed;
+}
+
+.btn-details:hover,
+.btn-join:hover,
+.btn-leave:hover,
+.btn-danger:hover {
+  transform: translateY(-2px);
+}
+
+/* עיצוב יצירת קבוצה */
+.create-group-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.create-group-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.create-group-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.create-group-form .form-group:last-child {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-next,
+.btn-back,
+.btn-submit,
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-next,
+.btn-submit {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-back,
+.btn-cancel {
+  background: #f0f0f0;
+  color: var(--text-dark);
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+  background: #3d8b40;
+}
+
+.btn-back:hover,
+.btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.btn-next:disabled,
+.btn-submit:disabled {
+  background: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.location-instructions {
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--text-dark);
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.location-map-container {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected-location {
+  background: #e8f5e9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.empty-groups {
+  text-align: center;
+  padding: 40px 0;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.empty-groups h3 {
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.empty-groups p {
+  color: var(--text-light);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .create-group-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .sport-type-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+  
+  .group-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .group-actions {
+    flex-direction: column;
+  }
+}
