@@ -11,6 +11,14 @@
   --box-shadow: 0 2px 8px var(--shadow-color);
   --transition: all 0.3s ease;
   --text-primary: #333333;
+
+  /* צבעים נוספים למערכת */
+  --primary-color-light: #a5d6a7;
+  --primary-color-dark: #2e7d32;
+  --secondary-color: #039be5;
+  --secondary-color-light: #b3e5fc;
+  --accent-color: #ff5722;
+  --tertiary-color: #673ab7;
 }
 
 body {
