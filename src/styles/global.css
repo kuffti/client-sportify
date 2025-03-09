@@ -48,7 +48,7 @@ body {
 
 .btn-primary {
   background: var(--primary-color);
-  color: var(--text-light);
+  color: white;
 }
 
 .btn-primary:hover {
@@ -58,7 +58,7 @@ body {
 
 .btn-secondary {
   background-color: var(--secondary-color);
-  color: var(--text-light);
+  color: white;
 }
 
 .btn-secondary:hover {

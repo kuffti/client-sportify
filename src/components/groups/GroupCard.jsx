@@ -127,6 +127,12 @@ function GroupCard({ group }) {
           <span className="info-icon">👤</span>
           <span>יוצר: {group.creator?.name || 'לא ידוע'}</span>
         </div>
+        <div className="info-item">
+          <span className="info-icon">📍</span>
+          <span>
+            {group.location?.name || 'מיקום נבחר'}
+          </span>
+        </div>
         
         {/* הצגת מרחק אם קיים */}
         {distance !== null && (

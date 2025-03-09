@@ -14,7 +14,10 @@ function CreateGroup({ sportType, sportName, onCancel }) {
     maxParticipants: 10
   });
   const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState('');
   const [step, setStep] = useState(1); // 1 = פרטי קבוצה, 2 = בחירת מיקום
+  const [searchAddress, setSearchAddress] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,22 +36,64 @@ function CreateGroup({ sportType, sportName, onCancel }) {
     setStep(1);
   };
 
-  const handleLocationSelect = (newLocation) => {
+  const handleLocationSelect = (newLocation, locationInfo = null) => {
     setLocation(newLocation);
+    if (locationInfo) {
+      setLocationName(locationInfo.name || '');
+    }
+  };
+
+  // פונקציה לחיפוש כתובת והמרתה לקואורדינטות
+  const searchByAddress = async (e) => {
+    e.preventDefault();
+    
+    if (!searchAddress.trim()) return;
+    
+    setIsSearching(true);
+    
+    try {
+      // שימוש ב-OpenStreetMap Nominatim API לחיפוש כתובת
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchAddress)}&format=json&limit=1&accept-language=he`);
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        const result = data[0];
+        const newLocation = {
+          latitude: parseFloat(result.lat),
+          longitude: parseFloat(result.lon)
+        };
+        
+        // עדכון המיקום והשם
+        handleLocationSelect(newLocation, {
+          name: result.display_name
+        });
+        
+      } else {
+        alert('לא נמצאו תוצאות לכתובת זו');
+      }
+    } catch (error) {
+      console.error('Error searching location:', error);
+      alert('אירעה שגיאה בחיפוש הכתובת');
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!location) {
-      alert('אנא בחר מיקום על המפה');
+      alert('אנא בחר מיקום על המפה או חפש לפי כתובת');
       return;
     }
     
     const groupData = {
       ...formData,
       sportType,
-      location
+      location: {
+        ...location,
+        name: locationName  // שמירת שם המיקום
+      }
     };
     
     try {
@@ -145,15 +190,49 @@ function CreateGroup({ sportType, sportName, onCancel }) {
         </form>
       ) : (
         <div className="location-selection">
-          <p className="location-instructions">בחר את מיקום הפעילות על ידי לחיצה על המפה</p>
+          <p className="location-instructions">בחר את מיקום הפעילות על ידי לחיצה על המפה או חיפוש לפי כתובת</p>
+          
+          {/* הוספת טופס חיפוש כתובת */}
+          <div className="address-search-form">
+            <form onSubmit={searchByAddress}>
+              <div className="search-input-group">
+                <input
+                  type="text"
+                  placeholder="הזן כתובת לחיפוש (לדוגמה: רמת גן, אבא הלל 10)"
+                  value={searchAddress}
+                  onChange={(e) => setSearchAddress(e.target.value)}
+                  className="address-search-input"
+                  required
+                />
+                <button 
+                  type="submit" 
+                  className="address-search-button" 
+                  disabled={isSearching}
+                >
+                  {isSearching ? 'מחפש...' : 'חפש'}
+                </button>
+              </div>
+            </form>
+          </div>
           
           <div className="location-map-container">
-            <GroupLocationMap onLocationSelect={handleLocationSelect} />
+            <GroupLocationMap onLocationSelect={handleLocationSelect} initialLocation={location} />
           </div>
           
           {location && (
             <div className="selected-location">
-              <p>המיקום נבחר: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)}</p>
+              <p>
+                <strong>המיקום נבחר:</strong> {locationName || `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}`}
+              </p>
+              <div className="location-name-form">
+                <label>שם המקום (רשות):</label>
+                <input 
+                  type="text" 
+                  value={locationName} 
+                  onChange={(e) => setLocationName(e.target.value)}
+                  placeholder="הוסף שם למקום (לדוגמה: מגרש הכדורסל)"
+                />
+              </div>
             </div>
           )}
           

@@ -103,7 +103,7 @@
 .groups-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 55px;
 }
 
 /* עיצוב כרטיס קבוצה */
@@ -524,6 +524,66 @@
 
 .empty-groups p {
   color: var(--text-light);
+}
+
+/* עיצוב לטופס חיפוש כתובת */
+.address-search-form {
+  margin-bottom: 15px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.search-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.address-search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.address-search-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.address-search-button:hover {
+  background-color: #3d8b40;
+}
+
+.address-search-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.location-name-form {
+  margin-top: 10px;
+}
+
+.location-name-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.location-name-form input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 @keyframes pulse {

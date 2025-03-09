@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { useEffect, useState, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -12,8 +12,8 @@ L.Icon.Default.mergeOptions({
 });
 
 // קומפוננטת ביניים למיפוי לחיצות על המפה
-function LocationMarker({ onLocationSelect }) {
-  const [position, setPosition] = useState(null);
+function LocationMarker({ onLocationSelect, initialLocation }) {
+  const [position, setPosition] = useState(initialLocation ? [initialLocation.latitude, initialLocation.longitude] : null);
   
   const map = useMapEvents({
     click(e) {
@@ -23,17 +23,46 @@ function LocationMarker({ onLocationSelect }) {
     },
   });
 
+  // כאשר נבחר מיקום מחיפוש, נעדכן את הנקודה
+  useEffect(() => {
+    if (initialLocation && (!position || 
+        position[0] !== initialLocation.latitude || 
+        position[1] !== initialLocation.longitude)) {
+      setPosition([initialLocation.latitude, initialLocation.longitude]);
+    }
+  }, [initialLocation]);
+
+  // אם יש מיקום ראשוני, נדאג שהמפה תתמקד בו
+  useEffect(() => {
+    if (position) {
+      map.setView(position, map.getZoom());
+    }
+  }, [position, map]);
+
   return position === null ? null : (
     <Marker position={position} />
   );
 }
 
-function GroupLocationMap({ onLocationSelect }) {
+// קומפוננטה שמרכזת את המפה על מיקום נבחר
+function MapUpdater({ position }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (position) {
+      map.setView([position.latitude, position.longitude], 15);
+    }
+  }, [position, map]);
+  
+  return null;
+}
+
+function GroupLocationMap({ onLocationSelect, initialLocation }) {
   const [defaultPosition, setDefaultPosition] = useState([31.7683, 35.2137]); // ירושלים כברירת מחדל
   
   // נסה לקבל מיקום נוכחי
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (!initialLocation && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -44,12 +73,12 @@ function GroupLocationMap({ onLocationSelect }) {
         }
       );
     }
-  }, []);
+  }, [initialLocation]);
 
   return (
     <div className="map-container">
       <MapContainer
-        center={defaultPosition}
+        center={initialLocation ? [initialLocation.latitude, initialLocation.longitude] : defaultPosition}
         zoom={13}
         style={{ height: '400px', width: '100%' }}
       >
@@ -57,7 +86,8 @@ function GroupLocationMap({ onLocationSelect }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <LocationMarker onLocationSelect={onLocationSelect} />
+        <LocationMarker onLocationSelect={onLocationSelect} initialLocation={initialLocation} />
+        {initialLocation && <MapUpdater position={initialLocation} />}
       </MapContainer>
     </div>
   );
