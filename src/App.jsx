@@ -6,15 +6,17 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CommunityPage from './pages/CommunityPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import NotFoundPage from './pages/NotFoundPage'; // נייבא את דף ה-404
+import NotFoundPage from './pages/NotFoundPage';
 import Toast from './components/layout/Toast';
 import Loader from './components/layout/Loader';
 import WeatherPage from './pages/WeatherPage';
-import TipsPage from './pages/TipsPage'; // חשוב! ייבוא דף הטיפים
+import TipsPage from './pages/TipsPage';
 import ProfilePage from './pages/ProfilePage';
-import CalculatorsPage from './pages/CalculatorsPage'; // ייבוא דף המחשבונים
-import GroupsPage from './pages/GroupsPage'; // ייבוא דף הקבוצות
+import CalculatorsPage from './pages/CalculatorsPage';
+import GroupsPage from './pages/GroupsPage';
+import GroupsMapPage from './pages/GroupsMapPage'; // ייבוא דף המפה החדש
 import './styles/weather.css';
+import './styles/groupsMap.css'; // ייבוא סגנון המפה החדש
 
 // קונפיגורציה להסרת האזהרות
 const routerConfig = {
@@ -32,7 +34,6 @@ function App() {
     <Router {...routerConfig}>
       <div className="app" dir="rtl">
         <Navbar />
-        {/* נסיר זמנית את ThemeToggle */}
         <main className="container">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -49,10 +50,11 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="/weather" element={<WeatherPage />} />
-            <Route path="/tips" element={<TipsPage />} /> {/* חשוב! נתיב לדף הטיפים */}
-            <Route path="/calculators" element={<CalculatorsPage />} /> {/* נתיב לדף המחשבונים */}
-            <Route path="/groups" element={<GroupsPage />} /> {/* הוספת נתיב לעמוד הקבוצות */}
-            <Route path="*" element={<NotFoundPage />} /> {/* כל נתיב אחר יוביל לדף 404 */}
+            <Route path="/tips" element={<TipsPage />} />
+            <Route path="/calculators" element={<CalculatorsPage />} />
+            <Route path="/groups" element={<GroupsPage />} />
+            <Route path="/groups/map" element={<GroupsMapPage />} /> {/* נתיב למפת הקבוצות */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Toast />

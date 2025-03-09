@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { joinGroup, leaveGroup, deleteGroup } from '../../features/groups/groupsSlice';
+import { calculateDistance, estimateTravelTime, getGoogleMapsDirectionsUrl, getWazeDirectionsUrl } from '../../utils/locationUtils';
+import { getSportTypeById } from '../../data/sportTypes';
 
 function GroupCard({ group }) {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
   const [showDetails, setShowDetails] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [distance, setDistance] = useState(null);
+  const [travelTimes, setTravelTimes] = useState(null);
   
   // וידוא שהנתונים קיימים לפני הגישה אליהם
   if (!group || !group.participants || !group.creator) {
@@ -15,6 +21,42 @@ function GroupCard({ group }) {
       </div>
     );
   }
+
+  // קבלת מיקום המשתמש
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ latitude, longitude });
+        },
+        (error) => {
+          console.warn("Error getting user location:", error.message);
+        }
+      );
+    }
+  }, []);
+
+  // חישוב מרחקים כאשר יש מיקום משתמש ומיקום קבוצה
+  useEffect(() => {
+    if (userLocation && group.location?.latitude && group.location?.longitude) {
+      const dist = calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        group.location.latitude,
+        group.location.longitude
+      );
+      
+      setDistance(dist);
+      
+      // חישוב זמני נסיעה עבור אמצעי תחבורה שונים
+      setTravelTimes({
+        driving: estimateTravelTime(dist, 'driving'),
+        walking: estimateTravelTime(dist, 'walking'),
+        cycling: estimateTravelTime(dist, 'cycling')
+      });
+    }
+  }, [userLocation, group.location]);
 
   // האם המשתמש הנוכחי הוא חלק מהקבוצה
   const isParticipant = user && group.participants.some(
@@ -56,11 +98,16 @@ function GroupCard({ group }) {
     }
   };
 
+  // קבלת מידע מורחב על סוג הספורט
+  const sportTypeInfo = getSportTypeById(group.sportType);
+
   return (
     <div className="group-card">
       <div className="group-header">
         <h3>{group.name || 'קבוצה ללא שם'}</h3>
-        <div className="group-type">{group.sportType}</div>
+        <div className="group-type" style={{ background: sportTypeInfo.color }}>
+          {sportTypeInfo.icon} {sportTypeInfo.name}
+        </div>
       </div>
       
       <div className="group-info">
@@ -80,6 +127,14 @@ function GroupCard({ group }) {
           <span className="info-icon">👤</span>
           <span>יוצר: {group.creator?.name || 'לא ידוע'}</span>
         </div>
+        
+        {/* הצגת מרחק אם קיים */}
+        {distance !== null && (
+          <div className="info-item distance-info">
+            <span className="info-icon">📍</span>
+            <span>מרחק: {distance.toFixed(1)} ק"מ</span>
+          </div>
+        )}
       </div>
       
       {showDetails && (
@@ -92,21 +147,67 @@ function GroupCard({ group }) {
           )}
           
           {group.location && (
-            <div className="group-location">
-              <h4>מיקום</h4>
-              <div className="location-mini-map">
-                <iframe 
-                  title={`מיקום קבוצת ${group.name}`}
-                  width="100%" 
-                  height="150" 
-                  frameBorder="0" 
-                  scrolling="no" 
-                  marginHeight="0" 
-                  marginWidth="0" 
-                  src={`https://maps.google.com/maps?q=${group.location.latitude},${group.location.longitude}&z=15&output=embed`} 
-                />
+            <>
+              <div className="group-location">
+                <h4>מיקום</h4>
+                <div className="location-mini-map">
+                  <iframe 
+                    title={`מיקום קבוצת ${group.name}`}
+                    width="100%" 
+                    height="150" 
+                    frameBorder="0" 
+                    scrolling="no" 
+                    marginHeight="0" 
+                    marginWidth="0" 
+                    src={`https://maps.google.com/maps?q=${group.location.latitude},${group.location.longitude}&z=15&output=embed`} 
+                  />
+                </div>
               </div>
-            </div>
+              
+              {/* הוספת אפשרויות ניווט */}
+              {userLocation && (
+                <div className="navigation-options">
+                  <h4>הגעה למקום</h4>
+                  {travelTimes && (
+                    <div className="travel-times">
+                      <div className="travel-time-item">
+                        <span className="travel-icon">🚗</span>
+                        <span>נסיעה: {travelTimes.driving} דקות</span>
+                      </div>
+                      <div className="travel-time-item">
+                        <span className="travel-icon">🚶‍♂️</span>
+                        <span>הליכה: {travelTimes.walking} דקות</span>
+                      </div>
+                      <div className="travel-time-item">
+                        <span className="travel-icon">🚴‍♂️</span>
+                        <span>אופניים: {travelTimes.cycling} דקות</span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="navigation-buttons">
+                    <a 
+                      href={getGoogleMapsDirectionsUrl(group.location, userLocation, 'driving')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-button google-maps"
+                    >
+                      <span className="nav-icon">🗺️</span>
+                      Google Maps
+                    </a>
+                    <a 
+                      href={getWazeDirectionsUrl(group.location)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-button waze"
+                    >
+                      <span className="nav-icon">🚗</span>
+                      Waze
+                    </a>
+                  </div>
+                </div>
+              )}
+            </>
           )}
           
           <div className="group-participants">
@@ -138,6 +239,11 @@ function GroupCard({ group }) {
         >
           {showDetails ? 'הסתר פרטים' : 'הצג פרטים'}
         </button>
+        
+        {/* הוספת לינק למפת קבוצות */}
+        <Link to={`/groups/map?group=${group._id}`} className="btn-view-on-map">
+          צפה במפה
+        </Link>
         
         {user && (
           isCreator ? (

@@ -281,6 +281,130 @@
   transform: translateY(-2px);
 }
 
+/* תוספות עיצוב לכרטיס קבוצה */
+.distance-info {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.navigation-options {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.navigation-options h4 {
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.travel-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.travel-time-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border-radius: 20px;
+  padding: 6px 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.travel-icon {
+  font-size: 1.2rem;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.nav-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button.google-maps {
+  background: #4285F4;
+}
+
+.nav-button.waze {
+  background: #33CCFF;
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+}
+
+.btn-view-on-map {
+  padding: 8px 16px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-view-on-map:hover {
+  background: #1976D2;
+  transform: translateY(-2px);
+}
+
+/* סגנון חדש לכפתור למפת קבוצות בעמוד הראשי */
+.btn-view-map {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(33, 150, 243, 0.3);
+}
+
+.btn-view-map:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(33, 150, 243, 0.4);
+  background: #1976D2;
+}
+
+.map-icon {
+  font-size: 1.3rem;
+}
+
 /* עיצוב יצירת קבוצה */
 .create-group-container {
   background: white;

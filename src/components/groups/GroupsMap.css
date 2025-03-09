@@ -1,0 +1,125 @@
+.groups-map-container {
+  position: relative;
+  height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.group-popup h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+
+.group-type-tag {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.group-distance {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 8px;
+}
+
+.group-navigation-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.directions-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.directions-link:hover {
+  transform: translateY(-2px);
+}
+
+.directions-link.google {
+  background-color: #4285F4;
+  color: white;
+}
+
+.directions-link.waze {
+  background-color: #33CCFF;
+  color: white;
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-width: 200px;
+}
+
+.map-legend h4 {
+  margin: 0 0 8px 0;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.legend-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+}
+
+.legend-label {
+  font-size: 0.8rem;
+  color: var(--text-dark);
+}
+
+.user-location-popup h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.leaflet-popup-content-wrapper {
+  direction: rtl;
+  text-align: right;
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px;
+  min-width: 180px;
+}

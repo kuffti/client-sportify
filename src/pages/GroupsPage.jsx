@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getGroups } from '../features/groups/groupsSlice';
 import GroupsList from '../components/groups/GroupsList';
 import CreateGroup from '../components/groups/CreateGroup';
@@ -61,6 +62,12 @@ function GroupsPage() {
         <div className="groups-header">
           <h1>קבוצות ספורט</h1>
           <p>מצא קבוצה להצטרף אליה או צור קבוצה חדשה</p>
+          
+          {/* כפתור חדש למפת הקבוצות */}
+          <Link to="/groups/map" className="btn-view-map">
+            <span className="map-icon">🗺️</span>
+            צפה במפת הקבוצות
+          </Link>
         </div>
         
         <SportTypeFilter 
