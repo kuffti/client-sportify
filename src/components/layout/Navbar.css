@@ -1,101 +1,273 @@
 .navbar {
-  background: var(--background-color);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  padding: 1rem 0;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .navbar-container {
+  display: flex;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0.8rem 1.5rem;
 }
 
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
-  color: var(--primary-color);
+  gap: 10px;
+  color: var(--text-dark);
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-left: auto; /* הזזת הלוגו לצד ימין */
 }
 
 .logo-icon {
-  font-size: 24px;
-}
-
-.logo-text {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 1.8rem;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-.nav-links a {
-  color: var(--text-dark);
+  margin-left: 150px; /* ביטול מרווח משמאל */
+  margin-right: auto; /* הוספת מרווח אוטומטי מימין שידחוף את הקישורים ימינה */
 }
 
 .nav-link {
-  text-decoration: none;
   color: var(--text-dark);
+  text-decoration: none;
+  padding: 8px 12px;
   font-weight: 500;
-  padding: 8px 16px;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
 .nav-link:hover {
-  background-color: var(--background-light);
   color: var(--primary-color);
+  background-color: rgba(76, 175, 80, 0.08);
 }
 
 .btn-register {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
   color: white !important;
+  border-radius: 50px;
+  padding: 8px 18px !important;
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
 }
 
 .btn-register:hover {
-  background: #43A047;
-  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+  background-color: var(--primary-color) !important;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  background: var(--background-light);
-  border-radius: var(--border-radius);
+/* עיצוב חדש לאזור הפרופיל */
+.user-profile-container {
+  position: relative;
 }
 
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  background: var(--primary-color);
-  color: white;
+.profile-button {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.user-avatar-text {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.admin-indicator {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #FFC107;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  border: 2px solid white;
+}
+
+/* עיצוב תפריט נפתח */
+.profile-dropdown {
+  position: fixed; /* שינוי מ-absolute ל-fixed */
+  top: 60px; /* מיקום יחסית לחלקו העליון של החלון */
+  left: 10px; /* שינוי המיקום לצד שמאל */
+  right: auto; /* ביטול הגדרת צד ימין */
+  width: 250px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  z-index: 1000;
+  animation: dropdown-appear 0.2s ease-out;
+  transform-origin: top left; /* שינוי נקודת המוצא לאנימציה */
+  max-height: calc(100vh - 70px); /* הגבלת גובה כדי שיתאים תמיד לחלון */
+  overflow-y: auto;
+  max-width: 280px; /* רוחב מקסימלי קבוע */
+}
+
+@keyframes dropdown-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 12px;
+}
+
+.profile-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.profile-email {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  word-break: break-all;
+}
+
+.admin-badge {
+  display: inline-block;
+  margin-top: 5px;
+  background: linear-gradient(to right, #FFC107, #FF9800);
+  color: #333;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.profile-menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: var(--text-dark);
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  gap: 10px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+}
+
+.profile-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.menu-icon {
+  font-size: 1.1rem;
+}
+
+.menu-divider {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #f0f0f0;
 }
 
 .logout-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #e74c3c;
+  color: #e53935;
+  font-weight: 500;
 }
 
-.logout-btn:hover {
-  background: rgba(231, 76, 60, 0.1);
+/* תיקון לסגנון הישן שלא יפריע */
+.user-menu, .user-profile, .profile-link {
+  display: none;
+}
+
+/* תגובתיות במסכים קטנים */
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 10px;
+  }
+  
+  .profile-dropdown {
+    width: 220px;
+    left: 50%; /* שינוי המיקום למרכז משמאל */
+    right: auto;
+    transform: translateX(-50%); /* שינוי הטרנספורם להזזה לשמאל */
+  }
+
+  @keyframes dropdown-appear {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) translateX(-50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) translateX(-50%) scale(1);
+    }
+  }
+
+  .user-profile-container {
+    position: static; /* שינוי למיקום רגיל במסכים קטנים */
+  }
+}
+
+/* במסכים קטנים מאוד - מיקום מדויק יותר */
+@media (max-width: 480px) {
+  .profile-dropdown {
+    width: 90vw; /* 90% מרוחב המסך */
+    max-width: 280px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }
