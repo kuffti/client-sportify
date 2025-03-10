@@ -23,7 +23,7 @@
 }
 
 .post-input {
-  width: 100%;
+  width: calc(100% - 24px);
   padding: 12px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
