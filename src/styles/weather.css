@@ -195,8 +195,9 @@
 }
 
 .alternatives-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
 }
 
@@ -989,12 +990,6 @@
   margin-bottom: 20px;
   color: var(--text-dark);
   text-align: center;
-}
-
-.alternatives-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 15px;
 }
 
 @media (max-width: 768px) {
